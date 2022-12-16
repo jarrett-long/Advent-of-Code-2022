@@ -1,0 +1,19 @@
+{
+  "name": "aoc-2022",
+  "version": "1.0.0",
+  "description": "Advent of Code 2022",
+  "main": "start.js",
+  "type": "module",
+  "dependencies": {
+    "plop": "^3.1.1",
+    "prettier": "2.8.1"
+  },
+  "devDependencies": {
+    "yargs": "^17.6.2"
+  },
+  "scripts": {
+    "plop": "plop"
+  },
+  "author": "Jarrett Long",
+  "license": "ISC"
+}
