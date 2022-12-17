@@ -10,7 +10,7 @@ export default (input) => {
   const crtRow = () => Math.floor(cycle / 40) % 6
   const sprite = () => [x - 1, x, x + 1]
   const crt = [[], [], [], [], [], []]
-  const render = () => crt.map((a) => a.join('') + '\n').join('')
+  const render = () => crt.map((px) => px.join('') + '\n').join('')
 
   const clock = new ClockCircuit()
   clock.on(tick, () => {
