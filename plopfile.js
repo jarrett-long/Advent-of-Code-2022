@@ -26,6 +26,10 @@ export default function (plop) {
       },
       {
         type: 'add',
+        path: 'day{{day}}/sample.txt',
+      },
+      {
+        type: 'add',
         path: 'day{{day}}/prompt.md',
       },
     ],
