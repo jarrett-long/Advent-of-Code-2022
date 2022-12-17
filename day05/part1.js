@@ -5,7 +5,7 @@ export default (input) => {
 
   const stacksLines = stacksTxt.split('\n')
 
-  const rows = stacksLines
+  const stackNumbers = stacksLines
     .pop()
     .split(' ')
     .filter((x) => !isNullOrWhitespace(x))
@@ -15,19 +15,19 @@ export default (input) => {
     let line = stacksLines.pop().split('')
     line.forEach((c, i) => {
       if (c == '[') {
-        rows[Math.floor(i / 4) + 1].push(line[i + 1])
+        stackNumbers[Math.floor(i / 4) + 1].push(line[i + 1])
       }
     })
   }
 
   proceduresTxt.split('\n').forEach((prodecureLine) => {
-    var [_, amt, _, rowA, _, rowB] = prodecureLine.split(' ')
+    var [_, amt, _, stackA, _, stackB] = prodecureLine.split(' ')
     for (let i = 0; i < amt; i++) {
-      rows[rowB].push(rows[rowA].pop())
+      stackNumbers[stackB].push(stackNumbers[stackA].pop())
     }
   })
 
-  const answer = Object.entries(rows).reduce(
+  const answer = Object.entries(stackNumbers).reduce(
     (topCrates, [_, crates]) => topCrates + crates[crates.length - 1],
     ''
   )
