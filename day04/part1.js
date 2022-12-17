@@ -1,4 +1,3 @@
-import { readLines } from '../utils/input-helper.js'
 export default (input) => {
   const getRange = (str) => {
     const [start, end] = str.split('-').map((c) => parseInt(c))
@@ -12,7 +11,8 @@ export default (input) => {
     )
   }
 
-  const total = readLines(input)
+  const total = input
+    .split('\n')
     .map((line) => line.split(','))
     .map((pairArr) => ({ r1: getRange(pairArr[0]), r2: getRange(pairArr[1]) }))
     .reduce((count, pair) => (fullyContains(pair) ? ++count : count), 0)
