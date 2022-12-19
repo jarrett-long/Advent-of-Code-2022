@@ -1,2 +1,2 @@
 import { run } from './run.js'
-const answer = await run('10', '2', 'sample')
+const answer = await run('11', '2', 'sample')
