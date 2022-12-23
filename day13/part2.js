@@ -6,12 +6,14 @@ export default (input) => {
   const loopDetermineOrder = (lArr, rArr) => {
     let result = UNDECIDED
     let i = 0
-    while (result == UNDECIDED && i < lArr.length && i < rArr.length) {
+
+    while (result === UNDECIDED && i < lArr.length && i < rArr.length) {
       result = determineOrder(lArr[i], rArr[i])
       i++
     }
+
     if (result === UNDECIDED) {
-      if (lArr[i] == undefined && rArr[i] == undefined) {
+      if (lArr[i] === undefined && rArr[i] === undefined) {
         return UNDECIDED
       }
       if (lArr[i] === undefined) {
@@ -26,15 +28,15 @@ export default (input) => {
   }
 
   const determineOrder = (l, r) => {
-    if (Number.isInteger(l) && Number.isInteger(r)) {
-      return l == r ? UNDECIDED : l < r ? IN_ORDER : OUT_OF_ORDER
+    if (typeof l === 'number' && typeof r === 'number') {
+      return l === r ? UNDECIDED : l < r ? IN_ORDER : OUT_OF_ORDER
     }
 
-    if (Number.isInteger(l) && !Number.isInteger(r)) {
+    if (typeof l === 'number' && r instanceof Array) {
       return loopDetermineOrder([l], r)
     }
 
-    if (!Number.isInteger(l) && Number.isInteger(r)) {
+    if (l instanceof Array && typeof r === 'number') {
       return loopDetermineOrder(l, [r])
     }
 
@@ -55,13 +57,13 @@ export default (input) => {
   const idx2 =
     1 +
     packets.findIndex(
-      (x) => x[0] != undefined && x[0].length == 1 && x[0][0] === 2
+      (x) => x[0] != undefined && x[0].length === 1 && x[0][0] === 2
     )
 
   const idx6 =
     1 +
     packets.findIndex(
-      (x) => x[0] != undefined && x[0].length == 1 && x[0][0] === 6
+      (x) => x[0] != undefined && x[0].length === 1 && x[0][0] === 6
     )
 
   const decoderKey = idx2 * idx6

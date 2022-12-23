@@ -6,12 +6,12 @@ export default (input) => {
   const loopDetermineOrder = (lArr, rArr) => {
     let result = UNDECIDED
     let i = 0
-    while (result == UNDECIDED && i < lArr.length && i < rArr.length) {
+    while (result === UNDECIDED && i < lArr.length && i < rArr.length) {
       result = determineOrder(lArr[i], rArr[i])
       i++
     }
     if (result === UNDECIDED) {
-      if (lArr[i] == undefined && rArr[i] == undefined) {
+      if (lArr[i] === undefined && rArr[i] === undefined) {
         return UNDECIDED
       }
       if (lArr[i] === undefined) {
@@ -46,7 +46,7 @@ export default (input) => {
     .map((pairTxt) => pairTxt.split('\n'))
     .map((pairArr) => [JSON.parse(pairArr[0]), JSON.parse(pairArr[1])])
     .map((p) => loopDetermineOrder(p[0], p[1]))
-    .map((r, i) => (r == IN_ORDER ? i + 1 : 0))
+    .map((r, i) => (r === IN_ORDER ? i + 1 : 0))
     .reduce((sum, i) => sum + i, 0)
 
   return `The sum of the indexes of the in-order pairs is ${sum}`
