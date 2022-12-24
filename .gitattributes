@@ -1,0 +1,2 @@
+# Set all files to lf so input can be split with a simple `.split(\n)`
+* text=auto eol=lf
