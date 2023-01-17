@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\solve.js -d 01 -p 1"
+      "program": "${workspaceFolder}\\debug.js"
     }
   ]
 }

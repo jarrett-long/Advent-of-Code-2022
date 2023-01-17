@@ -5,6 +5,7 @@
   "main": "start.js",
   "type": "module",
   "dependencies": {
+    "lodash-es": "^4.17.21",
     "plop": "^3.1.1",
     "prettier": "2.8.1"
   },
