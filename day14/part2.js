@@ -26,47 +26,33 @@ class Point {
 }
 
 export default (input) => {
-  const allRockLines = input
-    .split('\n')
-    .map((line) => line.split(' -> ').map((pointStr) => Point.parse(pointStr)))
+  let lowestY = 0
+  const caveMap = input.split('\n').reduce((map, line) => {
+    const coords = line
+      .split(' -> ')
+      .map((p) => Point.parse(p))
+      .reduce((arr, point) => {
+        if (arr.length == 0) return [point]
+        const lastPoint = arr[arr.length - 1]
+        return [
+          ...arr,
+          ...range(lastPoint.x, point.x, Math.sign(point.x - lastPoint.x)).map(
+            (x) => new Point(x, point.y)
+          ),
+          ...range(lastPoint.y, point.y, Math.sign(point.y - lastPoint.y)).map(
+            (y) => new Point(point.x, y)
+          ),
+          point,
+        ]
+      }, [])
 
-  const invalidPointsIds = Array.from(
-    new Set(
-      Array.from(new Set(input.split('\n')))
-        .map((line) =>
-          line
-            .split(' -> ')
-            .map((pointStr) => Point.parse(pointStr))
-            .reduce((arr, point) => {
-              if (arr.length == 0) return [point]
-              const lastPoint = arr[arr.length - 1]
-              return [
-                ...arr,
-                ...range(
-                  lastPoint.x,
-                  point.x,
-                  Math.sign(point.x - lastPoint.x)
-                ).map((x) => new Point(x, point.y)),
-                ...range(
-                  lastPoint.y,
-                  point.y,
-                  Math.sign(point.y - lastPoint.y)
-                ).map((y) => new Point(point.x, y)),
-                point,
-              ]
-            }, [])
-        )
-        .flat()
-        .map((point) => point.id())
-    )
-  )
+    for (const point of coords) {
+      map.set(point.id(), point)
+      lowestY = point.y > lowestY ? point.y : lowestY
+    }
 
-  // actually "highest" bc of how the grid system works
-  const lowestY = invalidPointsIds.reduce(
-    (lowest, pointId) =>
-      Point.parse(pointId).y > lowest ? Point.parse(pointId).y : lowest,
-    0
-  )
+    return map
+  }, new Map())
 
   const floorY = lowestY + 2
 
@@ -74,30 +60,30 @@ export default (input) => {
     const grain = new Point(500, 0)
     while (grain.y < floorY) {
       if (grain.down().y === floorY) {
-        return grain.id()
+        break
       }
-      if (!invalidPointsIds.includes(grain.down().id())) {
+      if (!caveMap.has(grain.down().id())) {
         grain.move(grain.down())
         continue
       }
-      if (!invalidPointsIds.includes(grain.downLeft().id())) {
+      if (!caveMap.has(grain.downLeft().id())) {
         grain.move(grain.downLeft())
         continue
       }
-      if (!invalidPointsIds.includes(grain.downRight().id())) {
+      if (!caveMap.has(grain.downRight().id())) {
         grain.move(grain.downRight())
         continue
       }
-      return grain.id()
+      break
     }
-    return undefined
+    return grain
   }
 
   let count = 0
   let restingPlace = dropSand()
-  while (restingPlace != new Point(500, 0).id()) {
+  while (restingPlace.id() != new Point(500, 0).id()) {
     count++
-    invalidPointsIds.push(restingPlace)
+    caveMap.set(restingPlace.id(), restingPlace)
     restingPlace = dropSand()
   }
 
